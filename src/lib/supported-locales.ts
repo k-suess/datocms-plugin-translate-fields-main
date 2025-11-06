@@ -24,11 +24,32 @@ export function getSupportedToLocale(
         case 'en':
           return 'EN-US'
         case 'en-eu':
+        case 'en-gb':
           return 'EN-GB'
         case 'en-ie':
           return 'EN-GB'
+        case 'en-us':
+          return 'EN-US'
         case 'pt':
           return 'PT-PT'
+        case 'pt-br':
+          return 'PT-BR'
+        case 'pt-pt':
+          return 'PT-PT'
+        // Chinese mappings (CRITICAL for project requirements)
+        case 'zh':
+        case 'zh-cn':
+        case 'zh-hans':
+          return 'ZH-HANS' // Simplified Chinese
+        case 'zh-tw':
+        case 'zh-hk':
+        case 'zh-hant':
+          return 'ZH-HANT' // Traditional Chinese
+        // Spanish Latin American
+        case 'es-419':
+        case 'es-mx':
+        case 'es-ar':
+          return 'ES-419'
         default:
           break
       }
@@ -83,17 +104,21 @@ export function getSupportedFromLocale(
 }
 
 export const deeplTo = [
+  'AR', // Arabic
   'BG',
   'CS',
   'DA',
   'DE',
   'EL',
+  'EN', // English (unspecified variant for backward compatibility)
   'EN-GB',
   'EN-US',
   'ES',
+  'ES-419', // Spanish (Latin American)
   'ET',
   'FI',
   'FR',
+  'HE', // Hebrew (text translation via next-gen models only)
   'HU',
   'ID',
   'IT',
@@ -104,6 +129,7 @@ export const deeplTo = [
   'NB',
   'NL',
   'PL',
+  'PT', // Portuguese (unspecified variant for backward compatibility)
   'PT-BR',
   'PT-PT',
   'RO',
@@ -111,12 +137,16 @@ export const deeplTo = [
   'SK',
   'SL',
   'SV',
+  'TH', // Thai (text translation via next-gen models only)
   'TR',
   'UK',
-  'ZH',
+  'VI', // Vietnamese (text translation via next-gen models only)
+  'ZH-HANS', // Chinese (simplified)
+  'ZH-HANT', // Chinese (traditional)
 ]
 
 export const deeplFrom = [
+  'AR', // Arabic
   'BG',
   'CS',
   'DA',
@@ -127,6 +157,7 @@ export const deeplFrom = [
   'ET',
   'FI',
   'FR',
+  'HE', // Hebrew (text translation via next-gen models only)
   'HU',
   'ID',
   'IT',
@@ -143,9 +174,11 @@ export const deeplFrom = [
   'SK',
   'SL',
   'SV',
+  'TH', // Thai (text translation via next-gen models only)
   'TR',
   'UK',
-  'ZH',
+  'VI', // Vietnamese (text translation via next-gen models only)
+  'ZH', // Chinese (all variants)
 ]
 
 export const yandex = [

@@ -95,6 +95,82 @@ describe('getSupportedToLocale', () => {
         'BLA-BLA',
       )
     })
+
+    // Chinese language mappings (CRITICAL for project requirements)
+    describe('Chinese mappings', () => {
+      it('should map zh to ZH-HANS (simplified)', () => {
+        expect(getSupportedToLocale('zh', TranslationService.deepl)).toBe(
+          'ZH-HANS',
+        )
+      })
+
+      it('should map zh-Hans to ZH-HANS', () => {
+        expect(getSupportedToLocale('zh-Hans', TranslationService.deepl)).toBe(
+          'ZH-HANS',
+        )
+      })
+
+      it('should map zh-hans to ZH-HANS', () => {
+        expect(getSupportedToLocale('zh-hans', TranslationService.deepl)).toBe(
+          'ZH-HANS',
+        )
+      })
+
+      it('should map zh-CN to ZH-HANS', () => {
+        expect(getSupportedToLocale('zh-CN', TranslationService.deepl)).toBe(
+          'ZH-HANS',
+        )
+      })
+
+      it('should map zh-Hant to ZH-HANT (traditional)', () => {
+        expect(getSupportedToLocale('zh-Hant', TranslationService.deepl)).toBe(
+          'ZH-HANT',
+        )
+      })
+
+      it('should map zh-hant to ZH-HANT', () => {
+        expect(getSupportedToLocale('zh-hant', TranslationService.deepl)).toBe(
+          'ZH-HANT',
+        )
+      })
+
+      it('should map zh-TW to ZH-HANT', () => {
+        expect(getSupportedToLocale('zh-TW', TranslationService.deepl)).toBe(
+          'ZH-HANT',
+        )
+      })
+
+      it('should map zh-HK to ZH-HANT', () => {
+        expect(getSupportedToLocale('zh-HK', TranslationService.deepl)).toBe(
+          'ZH-HANT',
+        )
+      })
+    })
+
+    // New language support tests
+    describe('New languages', () => {
+      it('should support Arabic (AR)', () => {
+        expect(getSupportedToLocale('ar', TranslationService.deepl)).toBe('AR')
+      })
+
+      it('should support Spanish Latin American (ES-419)', () => {
+        expect(getSupportedToLocale('es-419', TranslationService.deepl)).toBe(
+          'ES-419',
+        )
+      })
+
+      it('should support Hebrew (HE)', () => {
+        expect(getSupportedToLocale('he', TranslationService.deepl)).toBe('HE')
+      })
+
+      it('should support Thai (TH)', () => {
+        expect(getSupportedToLocale('th', TranslationService.deepl)).toBe('TH')
+      })
+
+      it('should support Vietnamese (VI)', () => {
+        expect(getSupportedToLocale('vi', TranslationService.deepl)).toBe('VI')
+      })
+    })
   })
 
   describe('deeplFree', () => {
@@ -132,6 +208,90 @@ describe('getSupportedToLocale', () => {
       expect(
         getSupportedToLocale('bla-bla', TranslationService.deeplFree),
       ).toBe('BLA-BLA')
+    })
+
+    // Chinese language mappings (CRITICAL for project requirements)
+    describe('Chinese mappings', () => {
+      it('should map zh to ZH-HANS (simplified)', () => {
+        expect(getSupportedToLocale('zh', TranslationService.deeplFree)).toBe(
+          'ZH-HANS',
+        )
+      })
+
+      it('should map zh-Hans to ZH-HANS', () => {
+        expect(
+          getSupportedToLocale('zh-Hans', TranslationService.deeplFree),
+        ).toBe('ZH-HANS')
+      })
+
+      it('should map zh-hans to ZH-HANS', () => {
+        expect(
+          getSupportedToLocale('zh-hans', TranslationService.deeplFree),
+        ).toBe('ZH-HANS')
+      })
+
+      it('should map zh-CN to ZH-HANS', () => {
+        expect(getSupportedToLocale('zh-CN', TranslationService.deeplFree)).toBe(
+          'ZH-HANS',
+        )
+      })
+
+      it('should map zh-Hant to ZH-HANT (traditional)', () => {
+        expect(
+          getSupportedToLocale('zh-Hant', TranslationService.deeplFree),
+        ).toBe('ZH-HANT')
+      })
+
+      it('should map zh-hant to ZH-HANT', () => {
+        expect(
+          getSupportedToLocale('zh-hant', TranslationService.deeplFree),
+        ).toBe('ZH-HANT')
+      })
+
+      it('should map zh-TW to ZH-HANT', () => {
+        expect(getSupportedToLocale('zh-TW', TranslationService.deeplFree)).toBe(
+          'ZH-HANT',
+        )
+      })
+
+      it('should map zh-HK to ZH-HANT', () => {
+        expect(getSupportedToLocale('zh-HK', TranslationService.deeplFree)).toBe(
+          'ZH-HANT',
+        )
+      })
+    })
+
+    // New language support tests
+    describe('New languages', () => {
+      it('should support Arabic (AR)', () => {
+        expect(getSupportedToLocale('ar', TranslationService.deeplFree)).toBe(
+          'AR',
+        )
+      })
+
+      it('should support Spanish Latin American (ES-419)', () => {
+        expect(
+          getSupportedToLocale('es-419', TranslationService.deeplFree),
+        ).toBe('ES-419')
+      })
+
+      it('should support Hebrew (HE)', () => {
+        expect(getSupportedToLocale('he', TranslationService.deeplFree)).toBe(
+          'HE',
+        )
+      })
+
+      it('should support Thai (TH)', () => {
+        expect(getSupportedToLocale('th', TranslationService.deeplFree)).toBe(
+          'TH',
+        )
+      })
+
+      it('should support Vietnamese (VI)', () => {
+        expect(getSupportedToLocale('vi', TranslationService.deeplFree)).toBe(
+          'VI',
+        )
+      })
     })
   })
 
