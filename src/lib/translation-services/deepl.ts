@@ -44,24 +44,60 @@ export default async function translate(
       ? 'api-free'
       : 'api'
 
-  const apiUrl = new URL('https://cors-proxy.datocms.com') // DatoCMS-provided CORS proxy
-  apiUrl.searchParams.set('url', `https://${apiVersion}.deepl.com/v2/translate`) // Actual DeepL API endpoint
+  const deepLApiUrl = `https://${apiVersion}.deepl.com/v2/translate`
 
-  // Make the API request
-  const request = await fetch(apiUrl, {
-    method: 'POST', // Note: DeepL will deprecate GET requests from March 2025: https://developers.deepl.com/docs/resources/breaking-changes-change-notices/march-2025-deprecating-get-requests-to-translate-and-authenticating-with-auth_key
-    headers: {
+  // Detect if we're running on Netlify (check for netlify.app domain or netlify function)
+  const isNetlify =
+    typeof window !== 'undefined' &&
+    (window.location.hostname.includes('netlify.app') ||
+      window.location.hostname.includes('netlify.com'))
+
+  // Use Netlify Function proxy if available, otherwise fallback to DatoCMS CORS proxy
+  let proxyUrl: string
+  let headers: HeadersInit
+
+  if (isNetlify) {
+    // Use Netlify Function as proxy
+    const netlifyFunctionUrl = new URL(
+      '/.netlify/functions/deepl-proxy',
+      window.location.origin,
+    )
+    netlifyFunctionUrl.searchParams.set('version', apiVersion)
+    proxyUrl = netlifyFunctionUrl.toString()
+    headers = {
       Authorization: `DeepL-Auth-Key ${options.apiKey}`,
       'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: params, // Form body is URL-encoded just like search params
+    }
+  } else {
+    // Use DatoCMS CORS proxy
+    const corsProxyUrl = new URL('https://cors-proxy.datocms.com')
+    corsProxyUrl.searchParams.set('url', deepLApiUrl)
+    proxyUrl = corsProxyUrl.toString()
+    headers = {
+      Authorization: `DeepL-Auth-Key ${options.apiKey}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+  }
+
+  // Make the API request
+  const request = await fetch(proxyUrl, {
+    method: 'POST',
+    headers: headers,
+    body: params,
   })
 
-  if (request.status !== 200) {
-    throw new Error(`DEEPL returned status ${request.status}`)
+  if (!request.ok) {
+    const errorText = await request.text().catch(() => 'Unknown error')
+    throw new Error(
+      `DeepL API request failed (status ${request.status}): ${errorText}`,
+    )
   }
 
   const response = await request.json()
+
+  if (!response.translations || !Array.isArray(response.translations)) {
+    throw new Error('Invalid response format from DeepL API')
+  }
 
   return response.translations
     .map((translation: any) => translation.text)
